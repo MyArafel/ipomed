@@ -105,7 +105,6 @@ class GameState():
         elif self.state == 'prestart':
             return
 
-
     def check_for_hit(self, hitbox):
         if hitbox.hits():
             self.scoreHandler.change_score(10)

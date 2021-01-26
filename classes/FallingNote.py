@@ -3,6 +3,14 @@ import pygame
 from utils import load_image
 from math import floor
 
+sprites = [
+    "icons/icon1.PNG",
+    "icons/icon2.PNG",
+    "icons/icon3.PNG",
+    "icons/icon4.PNG",
+]
+spritenum = 0
+
 class FallingNote(pygame.sprite.Sprite):
     def __init__(self, lane_i, allsprites, music_player_ref, note):
         pygame.sprite.Sprite.__init__(self, allsprites)  # call Sprite intializer
@@ -11,7 +19,14 @@ class FallingNote(pygame.sprite.Sprite):
         self.note = note
         
         self.lane_index = lane_i
-        self.image, self.rect = load_image("musicnote-example.png", -1)
+
+        global sprites
+        global spritenum
+        # get index from sprites global so notes differ in sprite used
+        self.image, self.rect = load_image(sprites[spritenum], -1)
+        # set sprite num to increment or reset using ternary (just tuple using bool as index, python does not have a ternary operator)
+        spritenum = (0, spritenum + 1)[spritenum < 3]
+
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()  # ONLY USE THIS TO CHECK IT HAS FALLEN OF SCREEN
         self.rect.topleft = self._new_start_pos()
