@@ -18,7 +18,7 @@ def main():
     allsprites = pygame.sprite.Group()
 
     # Song to be used in game. Only one can be used.
-    song = song_library.songs[0]
+    song = song_library.songs[1]
 
     # Create game_state instance, this holds all required game info
     game_state = GameState(allsprites, song)

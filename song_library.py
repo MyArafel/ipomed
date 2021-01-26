@@ -18,6 +18,6 @@ Song(
     'RobotoMono-VariableFont_wght.ttf',
     None,
     400,
-    'Ode To Joy'
+    'Oda a la Alegría'
 )
 ]
