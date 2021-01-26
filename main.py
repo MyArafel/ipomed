@@ -5,6 +5,7 @@ from classes.Button import Button
 import song_library
 from classes.Widget import Widget
 
+
 def main():
     # Initialize pygame
     pygame.init()
@@ -36,11 +37,15 @@ def main():
 
     # Prepare game objects
     clock = pygame.time.Clock()
-    startButton = Button(500, 300, 140, 40, 'Start', game_state.restart, song.get_font_filename(), allsprites, game_state)
-    quitButton = Button(500, 350, 140, 40, 'Quit', quit, song.get_font_filename(), allsprites, game_state)
+    startButton = Button(500, 300, 140, 40, 'Start', game_state.restart, song.get_font_filename(), allsprites, game_state, 'prestart')
+    quitButton = Button(500, 350, 140, 40, 'Quit', quit, song.get_font_filename(), allsprites, game_state, 'prestart')
+
+    restartButton = Button(500, 300, 140, 40, 'Restart', game_state.restart, song.get_font_filename(), allsprites, game_state, 'postgame')
+    backToMenuButton = Button(500, 350, 140, 40, 'Menu', game_state.back_to_menu, song.get_font_filename(), allsprites, game_state, 'postgame')
     
     score_widget = Widget(100, 400, 200, 50, ' Score', song.get_font_filename(), allsprites, game_state, 'playing')
-    high_score_widget = Widget(100, 450, 300, 50, ' high score', song.get_font_filename(), allsprites, game_state, 'playing')
+    high_score_widget = Widget(100, 450, 300, 50, ' high score', song.get_font_filename(), allsprites, game_state, 'postgame')
+
 
     # Main loop
     going = True
@@ -77,7 +82,6 @@ def main():
             # the score and high score widgets
             score_widget.setText("score: " + str(game_state.get_score()))
             high_score_widget.setText("highscore: " + str(game_state.get_high_score()))
-
             # Loop through all potential hitboxes
             for hitbox in game_state.hitboxes:
                 # Every hitbox needs to check all events
@@ -99,6 +103,12 @@ def main():
                             button.wake()  # Set the button as available again
                             hitbox.unpunch()
 
+        elif game_state.state == 'postgame':
+            for event in eventlist:
+            # Checks if a mouse is clicked 
+                if event.type == pygame.MOUSEBUTTONDOWN: 
+                    restartButton.check_click()
+                    backToMenuButton.check_click()
         # This calls the update() function on all sprites
         allsprites.update()
         

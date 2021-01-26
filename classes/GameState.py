@@ -46,6 +46,11 @@ class GameState():
             Hitbox('hitbox-example.png', 3, input_keys[3], self.allsprites),
         ]
 
+    def back_to_menu(self):
+        print("back to menu")
+        self.state = 'prestart'
+        self.notes_are_dropping = False
+        self.song_is_finished = False
 
     def restart(self):
         self.state = 'playing'
@@ -65,7 +70,6 @@ class GameState():
 
     def get_background(self):
         return self.background_handler.background
-
 
     def end_song(self):
         self.wait_untill_notes_gone = time.get_ticks() + 2000
@@ -87,7 +91,7 @@ class GameState():
         if self.state == 'playing':
             # When the song is done and there are no more notes dropping: go to menu
             if self.song_is_finished and not self.notes_are_dropping:
-                self.state = 'prestart'
+                self.state = 'postgame'
             # When the song is done and there are notes dropping: wait
             elif self.song_is_finished and self.notes_are_dropping:
                 # After some time assume no more notes are dropping
