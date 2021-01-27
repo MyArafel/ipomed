@@ -156,6 +156,35 @@ class MusicPlayer():
         # Set the next start a few moments later so the notes can drop
         self.next_note_start_time = pygame.time.get_ticks() + 1000 + self.difficulty
 
+    def set_song(self, song):
+        self.bpm = song.get_notes_bpm()
+        self.maten = {
+            "ACHTSTE": 30/self.bpm,
+            "KWART": 60/self.bpm,
+            "HALVE": 120/self.bpm,
+            "HELE": 240/self.bpm
+        }
+        self.matenvals = {
+            "ACHTSTE": 30/self.bpm,
+            "KWART": 60/self.bpm,
+            "HALVE": 120/self.bpm,
+            "HELE": 240/self.bpm
+        }
+        self.liedje = self._read_file(song.get_notes_filename())
+        self.song_length = len(self.liedje)
+        self.note_index = 0
+        self.current_note = self.noten[self.liedje[self.note_index][0]]
+        self.current_maat = self.maten[self.liedje[self.note_index][1]]
+        self.previous_note = 0
+        self.time_since_last_hit = 0
+        self.first_run = True
+        self.song_done = False
+
+        # Set the next start a few moments later so the notes can drop
+        self.next_note_start_time = pygame.time.get_ticks() + 1000 + self.difficulty
+
+
+
     def restart(self):
         self.note_index = 0
         self.current_note = self.noten[self.liedje[self.note_index][0]]

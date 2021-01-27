@@ -3,6 +3,8 @@ from classes.Song import Song
 # If you want to make your own Song, look at the Song class and which attributes it needs to create one.
 # Example below is also usefull in understanding the working of the different attributes of a Song.
 
+# extra songs kan je gwn in de list zetten de bg_game_header word gebruikt als song naam
+
 songs = [
 Song(
     'example_notes.txt',            	# notes_filename

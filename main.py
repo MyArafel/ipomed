@@ -5,8 +5,22 @@ from classes.Button import Button
 import song_library
 from classes.Widget import Widget
 
+game_state = None
+current_song = 0
+songButton = None
+
+def set_song():
+    global game_state
+    global current_song
+    global songButton
+    current_song = (0, current_song + 1)[len(song_library.songs) - 1 > current_song]
+    print(current_song)
+    game_state.set_song(song_library.songs[current_song])
+    songButton.set_text(song_library.songs[current_song].bg_game_header)
 
 def main():
+    global game_state
+    global songButton
     # Initialize pygame
     pygame.init()
     # Set screen size. Don't change this unless you know what you are doing!
@@ -37,15 +51,18 @@ def main():
 
     # Prepare game objects
     clock = pygame.time.Clock()
-    startButton = Button(500, 300, 140, 40, 'Start', game_state.restart, song.get_font_filename(), allsprites, game_state, 'prestart')
-    difficultyButton = Button(500, 350, 140, 40, 'Easy', game_state.toggle_difficulty, song.get_font_filename(), allsprites, game_state, 'prestart')
-    quitButton = Button(500, 400, 140, 40, 'Quit', quit, song.get_font_filename(), allsprites, game_state, 'prestart')
+    startButton = Button(500, 300, 140, 50, 'Start', game_state.restart, song.get_font_filename(), allsprites, game_state, 'prestart')
+    difficultyButton = Button(500, 350, 140, 50, 'Easy', game_state.toggle_difficulty, song.get_font_filename(), allsprites, game_state, 'prestart')
+    quitButton = Button(500, 400, 140, 50, 'Quit', quit, song.get_font_filename(), allsprites, game_state, 'prestart')
+    songButton = Button(500, 500, 300, 50, song_library.songs[0].bg_game_header, set_song, song.get_font_filename(), allsprites, game_state, 'prestart')
     game_state.diff_button = difficultyButton
 
     startButton.setBg((255,0,0))
     startButton.setLbg((255, 51, 0))
     difficultyButton.setBg((255,0,0))
     difficultyButton.setLbg((255, 51, 0))
+    songButton.setBg((0, 133, 2))
+    songButton.setLbg((0, 199, 3))
 
     restartButton = Button(500, 300, 140, 40, 'Restart', game_state.restart, song.get_font_filename(), allsprites, game_state, 'postgame')
     backToMenuButton = Button(500, 350, 140, 40, 'Menu', game_state.back_to_menu, song.get_font_filename(), allsprites, game_state, 'postgame')
@@ -84,10 +101,11 @@ def main():
         if game_state.state == 'prestart':
             for event in eventlist:
             # Checks if a mouse is clicked 
-                if event.type == pygame.MOUSEBUTTONDOWN: 
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     startButton.check_click()
                     quitButton.check_click()
                     difficultyButton.check_click()
+                    songButton.check_click()
 
         # This runs when the users starts a game
         elif game_state.state == 'playing':

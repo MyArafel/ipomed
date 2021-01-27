@@ -61,7 +61,6 @@ class GameState():
 
         self.difficulty(self.curr_diff)
 
-    
     def difficulty(self, d):
         a = 1/d
         self.music_player.set_difficulty(1 - a)
@@ -98,7 +97,7 @@ class GameState():
 
     def set_song(self, song):
         self.song = song
-        self.music_player.changesong(song)
+        self.music_player.set_song(song)
         self.background_handler = BackgroundHandler(song)
         self.note_dropper = NoteDropper(self.music_player)
         self.scoreHandler = ScoreHandler(self.allsprites, self, self.song) 
