@@ -154,7 +154,7 @@ class MusicPlayer():
         self.song_done = False
 
         # Set the next start a few moments later so the notes can drop
-        self.next_note_start_time = pygame.time.get_ticks() + 1000 + self.difficulty
+        self.next_note_start_time = pygame.time.get_ticks() + 1000 
 
     def set_song(self, song):
         self.bpm = song.get_notes_bpm()
@@ -181,9 +181,7 @@ class MusicPlayer():
         self.song_done = False
 
         # Set the next start a few moments later so the notes can drop
-        self.next_note_start_time = pygame.time.get_ticks() + 1000 + self.difficulty
-
-
+        self.next_note_start_time = pygame.time.get_ticks() + 1000 
 
     def restart(self):
         self.note_index = 0
@@ -199,6 +197,16 @@ class MusicPlayer():
         self.difficulty = d
         for maat in self.maten:
             self.maten[maat] = self.matenvals[maat] * d
+        
+        self.next_note_start_time = pygame.time.get_ticks() + 1000
+
+        self.note_index = 0
+        self.current_note = self.noten[self.liedje[self.note_index][0]]
+        self.current_maat = self.maten[self.liedje[self.note_index][1]]
+        self.previous_note = 0
+        self.time_since_last_hit = 0
+        self.first_run = True
+        self.song_done = False
     
     def play_note(self, note):
         # This check prevents double hits within 100ms
@@ -209,14 +217,12 @@ class MusicPlayer():
             self.previous_note = midi_note
             self.time_since_last_hit = pygame.time.get_ticks()
         
-
     def check_for_next_note(self):
         # check if its time to play the next note
         if pygame.time.get_ticks() > self.next_note_start_time:
             # if so, play it and set the next start time
             self.update_current_note()
             self.next_note_start_time = pygame.time.get_ticks() + self.current_maat * 1000
-            print(f"diff = {self.difficulty}")
 
 
     def update_current_note(self):

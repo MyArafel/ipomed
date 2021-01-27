@@ -58,15 +58,15 @@ class GameState():
         self.curr_diff = (1, self.curr_diff + 1)[self.curr_diff < 2]
         names = ("easy", "hard")
         self.diff_button.set_text(names[self.curr_diff - 1])
-
         self.difficulty(self.curr_diff)
 
     def difficulty(self, d):
         a = 1/d
+        if (a == 1):
+            a = 0
         self.music_player.set_difficulty(1 - a)
 
     def back_to_menu(self):
-        print("back to menu")
         self.state = 'prestart'
         self.notes_are_dropping = False
         self.song_is_finished = False
