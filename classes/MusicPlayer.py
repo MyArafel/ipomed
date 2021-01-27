@@ -9,8 +9,16 @@ class MusicPlayer():
         self.game_state = game_state_ref
 
         self.drop_next_note_callback = self.game_state.drop_next_note_sprite
-        
+
+        self.difficulty = 0
+
         self.maten = {
+            "ACHTSTE": 30/self.bpm,
+            "KWART": 60/self.bpm,
+            "HALVE": 120/self.bpm,
+            "HELE": 240/self.bpm
+        }
+        self.matenvals = {
             "ACHTSTE": 30/self.bpm,
             "KWART": 60/self.bpm,
             "HALVE": 120/self.bpm,
@@ -146,23 +154,7 @@ class MusicPlayer():
         self.song_done = False
 
         # Set the next start a few moments later so the notes can drop
-        self.next_note_start_time = pygame.time.get_ticks() + 1000
-
-    def changesong(self, song):
-        self.drop_next_note_callback = self.game_state.drop_next_note_sprite
-        self.song_length = len(self.liedje)
-        self.bpm = song.get_notes_bpm()
-        self.note_index = 0
-        self.liedje = self._read_file(song.get_notes_filename())
-        self.current_note = self.noten[self.liedje[self.note_index][0]]
-        self.current_maat = self.maten[self.liedje[self.note_index][1]]
-        self.first_run = True
-        self.song_done = False
-        self.previous_note = 0
-        self.time_since_last_hit = 0
-        self.next_note_start_time = pygame.time.get_ticks() + 1000
-        self.first_run = True
-        self.song_done = False
+        self.next_note_start_time = pygame.time.get_ticks() + 1000 + self.difficulty
 
     def restart(self):
         self.note_index = 0
@@ -174,7 +166,11 @@ class MusicPlayer():
         self.first_run = True
         self.song_done = False
         
-
+    def set_difficulty(self, d):
+        self.difficulty = d
+        for maat in self.maten:
+            self.maten[maat] = self.matenvals[maat] * d
+    
     def play_note(self, note):
         # This check prevents double hits within 100ms
         if self.time_since_last_hit < pygame.time.get_ticks() - 100:
@@ -191,6 +187,7 @@ class MusicPlayer():
             # if so, play it and set the next start time
             self.update_current_note()
             self.next_note_start_time = pygame.time.get_ticks() + self.current_maat * 1000
+            print(f"diff = {self.difficulty}")
 
 
     def update_current_note(self):

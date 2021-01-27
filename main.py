@@ -18,7 +18,7 @@ def main():
     allsprites = pygame.sprite.Group()
 
     # Song to be used in game. Only one can be used.
-    song = song_library.songs[1]
+    song = song_library.songs[0]
 
     # Create game_state instance, this holds all required game info
     game_state = GameState(allsprites, song)
@@ -38,14 +38,25 @@ def main():
     # Prepare game objects
     clock = pygame.time.Clock()
     startButton = Button(500, 300, 140, 40, 'Start', game_state.restart, song.get_font_filename(), allsprites, game_state, 'prestart')
-    quitButton = Button(500, 350, 140, 40, 'Quit', quit, song.get_font_filename(), allsprites, game_state, 'prestart')
+    difficultyButton = Button(500, 350, 140, 40, 'Easy', game_state.toggle_difficulty, song.get_font_filename(), allsprites, game_state, 'prestart')
+    quitButton = Button(500, 400, 140, 40, 'Quit', quit, song.get_font_filename(), allsprites, game_state, 'prestart')
+    game_state.diff_button = difficultyButton
+
+    startButton.setBg((255,0,0))
+    startButton.setLbg((255, 51, 0))
+    difficultyButton.setBg((255,0,0))
+    difficultyButton.setLbg((255, 51, 0))
 
     restartButton = Button(500, 300, 140, 40, 'Restart', game_state.restart, song.get_font_filename(), allsprites, game_state, 'postgame')
     backToMenuButton = Button(500, 350, 140, 40, 'Menu', game_state.back_to_menu, song.get_font_filename(), allsprites, game_state, 'postgame')
-    
+    restartButton.setBg((255,0,0))
+    restartButton.setLbg((255, 51, 0))
+    backToMenuButton.setBg((255, 153, 0))
+    backToMenuButton.setLbg((204, 102, 0))
+
     score_widget = Widget(100, 400, 200, 50, ' Score', song.get_font_filename(), allsprites, game_state, 'playing')
     high_score_widget = Widget(100, 450, 300, 50, ' high score', song.get_font_filename(), allsprites, game_state, 'postgame')
-
+    score_widget_pg = Widget(100, 400, 300, 50, ' Score:', song.get_font_filename(), allsprites, game_state, 'postgame')
 
     # Main loop
     going = True
@@ -76,6 +87,7 @@ def main():
                 if event.type == pygame.MOUSEBUTTONDOWN: 
                     startButton.check_click()
                     quitButton.check_click()
+                    difficultyButton.check_click()
 
         # This runs when the users starts a game
         elif game_state.state == 'playing':
@@ -104,6 +116,9 @@ def main():
                             hitbox.unpunch()
 
         elif game_state.state == 'postgame':
+            score_widget_pg.setText("score: " + str(game_state.get_last_score()))
+            if (game_state.get_high_score() < game_state.get_score()):
+                high_score_widget.setText("highscore: " + str(game_state.get_high_score()))
             for event in eventlist:
             # Checks if a mouse is clicked 
                 if event.type == pygame.MOUSEBUTTONDOWN: 

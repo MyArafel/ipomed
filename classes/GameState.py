@@ -40,11 +40,31 @@ class GameState():
         # Define Hitboxes
         input_keys = ['a', 's', 'd', 'f']
         self.hitboxes = [
-            Hitbox('hitbox-example.png', 0, input_keys[0], self.allsprites),
-            Hitbox('hitbox-example.png', 1, input_keys[1], self.allsprites),
-            Hitbox('hitbox-example.png', 2, input_keys[2], self.allsprites),
-            Hitbox('hitbox-example.png', 3, input_keys[3], self.allsprites),
+            Hitbox('hitbox-example_mexico.png', 0, input_keys[0], self.allsprites),
+            Hitbox('hitbox-example_mexico.png', 1, input_keys[1], self.allsprites),
+            Hitbox('hitbox-example_mexico.png', 2, input_keys[2], self.allsprites),
+            Hitbox('hitbox-example_mexico.png', 3, input_keys[3], self.allsprites),
         ]
+    diff_button = None
+    curr_diff = 1
+
+    def get_last_score(self):
+        return self.scoreHandler.get_last_score()
+
+    def toggle_difficulty(self):
+        levels = (1, 2)
+        if (self.diff_button is None):
+            return
+        self.curr_diff = (1, self.curr_diff + 1)[self.curr_diff < 2]
+        names = ("easy", "hard")
+        self.diff_button.set_text(names[self.curr_diff - 1])
+
+        self.difficulty(self.curr_diff)
+
+    
+    def difficulty(self, d):
+        a = 1/d
+        self.music_player.set_difficulty(1 - a)
 
     def back_to_menu(self):
         print("back to menu")
@@ -111,7 +131,6 @@ class GameState():
         else:
             self.sounds_miss.play()
             self.scoreHandler.change_score(-5)
-
 
     def add_gpio_pins(self, gpio_pins):
         for i in range(4):

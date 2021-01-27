@@ -8,7 +8,7 @@ class ScoreHandler(sprite.Sprite):
         self.font = load_font(song.get_font_filename(), 36)
 
         self.score = 0
-
+        self.last_score = 0
         # Feel free to play around with these variables
         # Currently they are not used anywhere in the code
         self.score_streak = 0
@@ -53,7 +53,10 @@ class ScoreHandler(sprite.Sprite):
 
     def change_score(self, score_difference):
         self.score += score_difference
-        
+    
+    def get_last_score(self):
+        return self.last_score
+    
     def get_high_score(self):
         played_song = self.game_state.song.get_notes_filename()
         best_score = None
@@ -75,3 +78,5 @@ class ScoreHandler(sprite.Sprite):
             f.write(text)
         print('The highscore is', self.get_high_score(), '- See ScoreHandler.py for new implementation')
         print('Your score is', self.score, '- See ScoreHandler.py for new implementation')
+        self.last_score = self.score
+

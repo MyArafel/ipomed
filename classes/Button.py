@@ -36,8 +36,15 @@ class Button(pygame.sprite.Sprite):
                 self.image = self.dark_button
         else:
             self.rect = ((-500, -500), (self.width, self.height))
-        
     
+    def setBg(self, color):
+        self.dark_bg_rgb = color
+        self._blit_buttons()
+    
+    def setLbg(self, color):
+        self.light_bg_rgb = color
+        self._blit_buttons()
+
     def set_text(self, t):
         print(f"new text: {t}")
         self.text = self.font.render(t , True , self.color_text)

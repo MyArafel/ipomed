@@ -11,7 +11,7 @@ class Widget(pygame.sprite.Sprite):
         self.width = width
         self.height = height
         self.color_text = (255,255,255)
-        self.dark_bg_rgb = (140,140,140)
+        self.dark_bg_rgb = (0,0,0)
         self.font = load_font(font_filename, 30)
         self.stage = stage
 
