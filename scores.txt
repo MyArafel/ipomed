@@ -85,3 +85,5 @@ example_notes.txt 85
 example_notes.txt 90
 ode_to_joy.txt 810
 ode_to_joy.txt 585
+megalovania.txt 520
+megalovania.txt 580

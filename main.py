@@ -135,8 +135,9 @@ def main():
 
         elif game_state.state == 'postgame':
             score_widget_pg.setText("score: " + str(game_state.get_last_score()))
-            if (game_state.get_high_score() < game_state.get_score()):
-                high_score_widget.setText("highscore: " + str(game_state.get_high_score()))
+            if (game_state.get_high_score() is not None):
+                if (game_state.get_high_score() < game_state.get_score()):
+                    high_score_widget.setText("highscore: " + str(game_state.get_high_score()))
             for event in eventlist:
             # Checks if a mouse is clicked 
                 if event.type == pygame.MOUSEBUTTONDOWN: 

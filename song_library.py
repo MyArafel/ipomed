@@ -21,5 +21,21 @@ Song(
     None,
     400,
     'Oda a la Alegría'
+),
+Song(
+    'megalovania.txt',
+    150,
+    'RobotoMono-VariableFont_wght.ttf',
+    None,
+    500,
+    'Megalovenia'
+),
+Song(
+    'La_Cucaracha.txt',
+    150,
+    'RobotoMono-VariableFont_wght.ttf',
+    None,
+    500,
+    'La Cucaracha'
 )
 ]
