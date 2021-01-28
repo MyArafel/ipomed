@@ -8,6 +8,7 @@ sprites = [
     "icons/icon2.PNG",
     "icons/icon3.PNG",
     "icons/icon4.PNG",
+    "icons/icon5.PNG"
 ]
 spritenum = 0
 
@@ -25,7 +26,7 @@ class FallingNote(pygame.sprite.Sprite):
         # get index from sprites global so notes differ in sprite used
         self.image, self.rect = load_image(sprites[spritenum], -1)
         # set sprite num to increment or reset using ternary (just tuple using bool as index, python does not have a ternary operator)
-        spritenum = (0, spritenum + 1)[spritenum < 3]
+        spritenum = (0, spritenum + 1)[spritenum < 4]
 
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()  # ONLY USE THIS TO CHECK IT HAS FALLEN OF SCREEN

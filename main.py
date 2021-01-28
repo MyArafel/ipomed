@@ -4,11 +4,13 @@ from classes.GameState import GameState
 from classes.Button import Button
 import song_library
 from classes.Widget import Widget
+from classes.quicksprite import QuickSprite
 
 game_state = None
 current_song = 0
 songButton = None
 
+# the set_song used for the event
 def set_song():
     global game_state
     global current_song
@@ -64,8 +66,8 @@ def main():
     songButton.setBg((0, 133, 2))
     songButton.setLbg((0, 199, 3))
 
-    restartButton = Button(500, 300, 140, 40, 'Restart', game_state.restart, song.get_font_filename(), allsprites, game_state, 'postgame')
-    backToMenuButton = Button(500, 350, 140, 40, 'Menu', game_state.back_to_menu, song.get_font_filename(), allsprites, game_state, 'postgame')
+    restartButton = Button(500, 300, 140, 50, 'Restart', game_state.restart, song.get_font_filename(), allsprites, game_state, 'postgame')
+    backToMenuButton = Button(500, 350, 140, 50, 'Menu', game_state.back_to_menu, song.get_font_filename(), allsprites, game_state, 'postgame')
     restartButton.setBg((255,0,0))
     restartButton.setLbg((255, 51, 0))
     backToMenuButton.setBg((255, 153, 0))
@@ -74,6 +76,8 @@ def main():
     score_widget = Widget(100, 400, 200, 50, ' Score', song.get_font_filename(), allsprites, game_state, 'playing')
     high_score_widget = Widget(100, 450, 300, 50, ' high score', song.get_font_filename(), allsprites, game_state, 'postgame')
     score_widget_pg = Widget(100, 400, 300, 50, ' Score:', song.get_font_filename(), allsprites, game_state, 'postgame')
+
+    logo = QuickSprite(430, 100, 412, 164, game_state, "iatvision.PNG", allsprites, "prestart")
 
     # Main loop
     going = True
@@ -137,7 +141,7 @@ def main():
             score_widget_pg.setText("score: " + str(game_state.get_last_score()))
             if (game_state.get_high_score() is not None):
                 if (game_state.get_high_score() < game_state.get_score()):
-                    high_score_widget.setText("highscore: " + str(game_state.get_high_score()))
+                    high_score_widget.setText("highscore: " + str(game_state.get_score()))
             for event in eventlist:
             # Checks if a mouse is clicked 
                 if event.type == pygame.MOUSEBUTTONDOWN: 
